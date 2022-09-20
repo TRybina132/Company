@@ -1,0 +1,22 @@
+version: '3.4'
+
+services: 
+
+  frontend:
+    image: company-frontend
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+    environment: 
+      - backendUrl=http://backend
+    ports:
+      - "4200:80"
+    depends_on: 
+      - backend
+  backend:
+    image: company
+    build: 
+      context: Company
+      dockerfile: Dockerfile
+    ports: 
+      - "5152:80"

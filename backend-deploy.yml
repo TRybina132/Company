@@ -1,0 +1,34 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: company
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: company
+    spec:
+      containers:
+      - name: company
+        image: potatoi9/company:latest
+        ports:
+        - containerPort: 80
+        env:
+        - name: ASPNETCORE_URLS
+          value: http://*:80
+  selector:
+    matchLabels:
+      app: company
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: company
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+  selector:
+    app: company
